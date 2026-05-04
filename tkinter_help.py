@@ -22,3 +22,5 @@ root.mainloop() #start the app
 
 # .pack() - stacks items on top of each other
 # .grid() - place items in rows and columns
+
+#Not very good and better use customtkinter!!!!!!
