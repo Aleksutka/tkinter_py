@@ -3,7 +3,7 @@ import os
 
 app = ctk.CTk()
 app.title("Telefona nummuru grāmatiņa")
-app.geometry("320x420")
+app.geometry("370x420")
 app.grid_columnconfigure(0, weight=1)
 app.grid_columnconfigure(1, weight=1)
 app.resizable(width=False, height=False)
@@ -29,9 +29,15 @@ def izdzest():
     tagad = "izdzest"
     txt.configure(text="Ievadiet vārdu kuru izdzēst!")
     buttApst.grid(row=2, column=1)
+
+def visi():
+    for file in os.listdir(folder_path):
+            name, ext = os.path.splitext(file)
+            print("-", name)
+    print()
         
 def turp():
-    global tagad, name, number
+    global tagad, name, number, file_path
     if tagad == "name":
         name = inp.get().strip().lower()
         inp.delete(0, "end")
@@ -69,10 +75,13 @@ def turp():
                 tagad = "yes"
             else:
                 txt.configure(text="Fails neeksistē!")
+                buttApst.grid_remove()
         except:
             txt.configure(text="Kaut kas sagāja greizi!")
-        buttApst.grid_remove()
-
+            buttApst.grid_remove()
+    elif tagad == "yes":
+        os.remove(file_path)
+        txt.configure(text="Kontakts tika izdzēsts!")
 
 txt = ctk.CTkLabel(app, text="", font=("Arial", 20))
 txt.grid(row=1, pady=20)
@@ -90,6 +99,9 @@ btnAtr = ctk.CTkButton(app, text="Atrast nummuru pēc vārda", command=atrast, h
 btnAtr.grid(row=4, padx=5, pady=5)
 
 btnIzdz = ctk.CTkButton(app, text="Izdzēst kontaktu", command=izdzest, height=35, width=200)
-btnIzdz.grid(row=5, column=0)
+btnIzdz.grid(row=5, column=0, pady=5)
+
+btnVisi = ctk.CTkButton(app, text="Visi kontakti", command=visi, height=35, width=200)
+btnVisi.grid(row=6, column=0, pady=5)
 
 app.mainloop()
